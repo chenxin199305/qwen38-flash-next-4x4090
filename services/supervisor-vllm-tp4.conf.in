@@ -1,0 +1,15 @@
+[program:vllm-tp4]
+command=@REPO_DIR@/scripts/serve.sh
+directory=@REPO_DIR@
+autostart=true
+autorestart=true
+startsecs=300
+startretries=10
+stopwaitsecs=60
+stopasgroup=true
+killasgroup=true
+stdout_logfile=@LOG_FILE@
+stdout_logfile_maxbytes=100MB
+stdout_logfile_backups=5
+redirect_stderr=true
+environment=HOME="@HOME_DIR@",PATH="@VENV@/bin:@CUDA_HOME@/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",CUDA_HOME="@CUDA_HOME@",VLLM_PLE_CPU_OFFLOAD="1",VLLM_FP8_HYBRID="1",VLLM_USE_FLASHINFER_SAMPLER="0",VLLM_ALLOW_LONG_MAX_MODEL_LEN="1"

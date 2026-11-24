@@ -1,0 +1,49 @@
+Qwen3.8-Flash-Next NVFP4 — 4x RTX 4090 48GB deployment recipe
+Copyright 2026 chenxin199305 and contributors
+
+This repository contains deployment scripts and documentation, not model
+weights. The model checkpoint is governed by its own license (see the model
+card; the upstream Qwen3.8-Flash-Next release is commonly listed under the
+Qwen Community License 1.0, and the NVFP4 quantized checkpoint may carry
+additional terms from its publisher). You are responsible for obtaining the
+checkpoint lawfully and complying with its license.
+
+Third-party components and derived work:
+
+* vLLM — Apache-2.0 — https://github.com/vllm-project/vllm
+  The patches in patches/ modify an installed vLLM 0.30.0 tree at runtime.
+  They are not a redistribution of vLLM. scripts/02-build-vllm.sh builds an
+  unmodified upstream release plus the upstream vllm-flash-attn subproject.
+
+* vllm-project/flash-attention — BSD-3-Clause
+  https://github.com/vllm-project/flash-attention
+  The FA2 extension is built from this upstream fork at commit 506341a and
+  installed into the vLLM package; no source is vendored here.
+
+* blazux/qwen3.8-Flash-DGX — Apache-2.0
+  https://github.com/blazux/qwen3.8-Flash-DGX
+  The QSA FP8 main-KV-cache patch (patches/02c-qsa-fp8-kv.py) and the mamba
+  block-size prefix-cache fix (patches/02b-mamba-block-size.py) are derived
+  from this repository.
+
+* Saren-Arterius/qwen3.8-Flash-DGX-AutoRound — Apache-2.0
+  https://github.com/Saren-Arterius/qwen3.8-Flash-DGX-AutoRound
+  The blockwise-FP8 side-layer conversion script (scripts/02a-build-fp8hybrid.py)
+  and the ModelOpt hybrid dispatch shim (patches/vllm_fp8_hybrid_modelopt.py)
+  are derived from the fp8_convert.py / vllm_fp8_hybrid.py work by
+  @Saren-Arterius.
+
+* PICO4robot/PICO-llm — the deployment branch qwen3.8-flash-next-nvfp4-4x4090.
+  https://github.com/PICO4robot/PICO-llm
+  The QSA fused-draft metadata patch (patches/02g-qsa-spec-cache.py) and the
+  FP8-hybrid runtime shim wiring are ported from this branch, which in turn
+  ports vLLM PR #58449.
+
+* chenxin199305/qwen38-flash-next-3x4090 — Apache-2.0
+  https://github.com/chenxin199305/qwen38-flash-next-3x4090
+  Repository layout, benchmark methodology and several helper scripts are
+  adapted from the 3-card recipe.
+
+The deployment notes were assembled by an AI assistant from an actual
+deployment process. They may contain errors or omit environment-specific
+details. Issues and corrections are welcome.

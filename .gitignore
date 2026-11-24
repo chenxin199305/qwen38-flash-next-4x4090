@@ -1,0 +1,28 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.sample
+*.key
+*.pem
+api-key
+API_KEY
+
+# Runtime state
+*.log
+*.pid
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Model overlays are never committed
+models/
+*.safetensors
+*.safetensors.index.json
+*.bf16.bak
+fp8hybrid-manifest.json
+
+# Build artifacts
+build/
+dist/
+*.whl
+*.egg-info/
